@@ -1,7 +1,7 @@
 {
   "scripts": {
     "prepare": "husky install",
-    "dev": "npx webpack serve --env mode=development --hot",
+    "dev": "npx webpack serve --env mode=development",
     "prod": "npx webpack --env mode=production"
   },
   "devDependencies": {

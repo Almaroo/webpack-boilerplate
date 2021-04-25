@@ -1,3 +1,11 @@
-div {
-  background-color: aliceblue;
+@custom-selector :--heading h1, h2, h3, h4, h5, h6;
+
+:root {
+  --mainColor: #1f7a8c;
+}
+
+:--heading {
+  font-size: 32px;
+  font-family: fantasy;
+  color: var(--mainColor);
 }

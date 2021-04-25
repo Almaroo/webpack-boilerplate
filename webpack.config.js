@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const EsLintPlugin = require('eslint-webpack-plugin');
 const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
 const { merge } = require('webpack-merge');
@@ -11,8 +12,13 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) =>
     {
       mode,
       plugins: [
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+          template: './index.html',
+        }),
         new webpack.ProgressPlugin(),
+        new MiniCssExtractPlugin({
+          filename: '[name].[contenthash].css',
+        }),
         new EsLintPlugin({
           extensions: ['js', 'ts'],
           failOnWarning: true,
@@ -48,6 +54,19 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) =>
                   presets: ['@babel/preset-env'],
                 },
               },
+            ],
+          },
+          {
+            test: /\.css$/,
+            use: [
+              mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+              {
+                loader: 'css-loader',
+                options: {
+                  importLoaders: 1,
+                },
+              },
+              'postcss-loader',
             ],
           },
         ],
